@@ -3,6 +3,87 @@
   "name": "orcs",
   "instructions": [
     {
+      "name": "mintNftWhitelisted",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "orcs",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "whitelistedUser",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "wallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "updateAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "masterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "clock",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "mintNft",
       "accounts": [
         {
@@ -119,6 +200,116 @@
       ]
     },
     {
+      "name": "addWhitelistUser",
+      "accounts": [
+        {
+          "name": "whitelistedUser",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "orcs",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "wallet",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "bump",
+          "type": "u8"
+        },
+        {
+          "name": "data",
+          "type": {
+            "defined": "WhitelistData"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateWhitelistUser",
+      "accounts": [
+        {
+          "name": "whitelistedUser",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "orcs",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "wallet",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": "WhitelistData"
+          }
+        }
+      ]
+    },
+    {
       "name": "initializeConfig",
       "accounts": [
         {
@@ -206,6 +397,28 @@
   ],
   "accounts": [
     {
+      "name": "WhitelistPDAUser",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "config",
+            "type": "publicKey"
+          },
+          {
+            "name": "data",
+            "type": {
+              "defined": "WhitelistData"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "Config",
       "type": {
         "kind": "struct",
@@ -259,6 +472,42 @@
     }
   ],
   "types": [
+    {
+      "name": "OrcsData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "uuid",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "whitelistedPrice",
+            "type": "u64"
+          },
+          {
+            "name": "itemsAvailable",
+            "type": "u64"
+          },
+          {
+            "name": "goLiveDate",
+            "type": "i64"
+          },
+          {
+            "name": "whitelistGoLiveDate",
+            "type": "i64"
+          },
+          {
+            "name": "teamWhitelistGoLiveDate",
+            "type": "i64"
+          }
+        ]
+      }
+    },
     {
       "name": "Creator",
       "type": {
@@ -332,27 +581,29 @@
       }
     },
     {
-      "name": "OrcsData",
+      "name": "WhitelistData",
       "type": {
         "kind": "struct",
         "fields": [
           {
+            "name": "nRedeemed",
+            "type": "u64"
+          },
+          {
+            "name": "nRedeemable",
+            "type": "u64"
+          },
+          {
+            "name": "isTeamMember",
+            "type": "bool"
+          },
+          {
+            "name": "whitelistedPubkey",
+            "type": "publicKey"
+          },
+          {
             "name": "uuid",
             "type": "string"
-          },
-          {
-            "name": "price",
-            "type": "u64"
-          },
-          {
-            "name": "itemsAvailable",
-            "type": "u64"
-          },
-          {
-            "name": "goLiveDate",
-            "type": {
-              "option": "i64"
-            }
           }
         ]
       }
@@ -392,7 +643,7 @@
     {
       "code": 306,
       "name": "TooManyCreators",
-      "msg": "Can only provide up to 4 creators to candy machine (because candy machine is one)!"
+      "msg": "Can only provide up to 4 creators!"
     },
     {
       "code": 307,
@@ -416,18 +667,48 @@
     },
     {
       "code": 311,
-      "name": "CandyMachineEmpty",
-      "msg": "Candy machine is empty!"
+      "name": "OrcsEmpty",
+      "msg": "No more orcs in store!"
     },
     {
       "code": 312,
-      "name": "CandyMachineNotLiveYet",
-      "msg": "Candy machine is not live yet!"
+      "name": "OrcsNotLiveYet",
+      "msg": "Orcs is not live yet!"
     },
     {
       "code": 313,
       "name": "ConfigLineMismatch",
       "msg": "Number of config lines must be at least number of items available"
+    },
+    {
+      "code": 314,
+      "name": "DerivedKeyInvalid",
+      "msg": "Derived key invalid"
+    },
+    {
+      "code": 315,
+      "name": "InvalidWhitelistedPayer",
+      "msg": "Invalid whitelisted payer"
+    },
+    {
+      "code": 316,
+      "name": "AlreadyRedeemed",
+      "msg": "Already redeemed max. amount of whitelist NFTs."
+    },
+    {
+      "code": 317,
+      "name": "AccountDiscriminatorMismatch",
+      "msg": "8 byte discriminator did not match what was expected"
+    },
+    {
+      "code": 318,
+      "name": "AccountNotMutable",
+      "msg": "The given account is not mutable"
+    },
+    {
+      "code": 319,
+      "name": "WhitelistModificationUnauthorized",
+      "msg": "User not authorized to perform whitelist modification"
     }
   ]
 }
